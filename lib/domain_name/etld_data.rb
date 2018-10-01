@@ -8155,8 +8155,6 @@ class DomainName
     "net.ru" => 0,
     "org.ru" => 0,
     "pp.ru" => 0,
-    "bitballoon.com" => 0,
-    "netlify.com" => 0,
     "4u.com" => 0,
     "ngrok.io" => 0,
     "nh-serv.co.uk" => 0,
