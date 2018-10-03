@@ -314,4 +314,12 @@ class TestDomainName < Test::Unit::TestCase
     assert_equal "xn--wgv71a", dn.tld
     assert_equal "日本", dn.tld_idn
   end
+
+  test "accepts an ignore argument" do
+    dn = DomainName.new("foo.netlify.com", ignore: ["netlify.com"])
+    assert_equal "netlify.com", dn.domain
+
+    dn = DomainName("netlify.com", ignore: ["netlify.com"])
+    assert_equal "netlify.com", dn.domain
+  end
 end

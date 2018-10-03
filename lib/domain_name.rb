@@ -75,7 +75,8 @@ class DomainName
 
   # Parses _hostname_ into a DomainName object.  An IP address is also
   # accepted.  An IPv6 address may be enclosed in square brackets.
-  def initialize(hostname)
+  # _ignore_ is a list of domains to ignore from the eltd data.
+  def initialize(hostname, ignore: [])
     hostname.is_a?(String) or
       (hostname.respond_to?(:to_str) && (hostname = hostname.to_str).is_a?(String)) or
       raise TypeError, "#{hostname.class} is not a String"
@@ -104,7 +105,7 @@ class DomainName
     else
       @tld = @hostname
     end
-    etld_data = DomainName.etld_data
+    etld_data = DomainName.etld_data.reject { |k, _| ignore.include?(k) }
     if @canonical_tld_p = etld_data.key?(@tld)
       subdomain = domain = nil
       parent = @hostname
@@ -292,6 +293,6 @@ class DomainName
 end
 
 # Short hand for DomainName.new().
-def DomainName(hostname)
-  DomainName.new(hostname)
+def DomainName(hostname, ignore: [])
+  DomainName.new(hostname, ignore: ignore)
 end
